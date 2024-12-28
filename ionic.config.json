@@ -1,0 +1,7 @@
+{
+  "name": "expense-tracking-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
