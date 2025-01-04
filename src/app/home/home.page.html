@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+
+    <ion-grid class="cardContainer">
+      <ion-row>
+        <ion-col size="12">
+          <ion-card class="balanceCard">
+            <ion-card-content style="display: flex; justify-content: space-between;">
+              <ion-label class="balanceLabel">Balance: </ion-label>
+              <ion-text class="balanceValue">$5000</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-card class="totalCard">
+            <ion-card-content>
+              <ion-label class="cardLabel">Income:</ion-label>
+              <ion-text class="cardValue">$8000</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card class="spendCard">
+            <ion-card-content>
+              <ion-label class="cardLabel">Spend:</ion-label>
+              <ion-text class="cardValue">$3000</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+  </div>
+</ion-content>

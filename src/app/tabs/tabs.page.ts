@@ -8,6 +8,21 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
+  menuOpen = false;
+
   constructor() {}
+  
+  onAddClick(){
+    this.menuOpen = !this.menuOpen;
+  }
+
+
+  onNewIncome() {
+    console.log('New Income');
+  }
+
+  onNewExpense() {
+    console.log('New Expense');
+  }
 
 }

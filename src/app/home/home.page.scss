@@ -1,0 +1,60 @@
+.cardContainer {
+    // padding: 12px;
+  
+    ion-card {
+      margin-bottom: 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      text-align: center;
+  
+      ion-label {
+        display: block;
+        font-size: 26px;
+        font-weight: bold;
+        color: #555;
+      }
+  
+      ion-text {
+        display: block;
+        font-size: 20px;
+        font-weight: bold;
+        color: #000;
+        margin-top: 8px;
+      }
+    }
+    .balanceLabel{
+        font-weight: bold;
+    }
+  
+    .balanceCard {
+      background: linear-gradient(135deg, #ffddc1, #fcb69f);
+    }
+  
+    .totalCard {
+      background: linear-gradient(135deg, #d4fc79, #96e6a1);
+    }
+  
+    .spendCard {
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .cardContainer {
+      ion-row {
+        display: flex;
+        justify-content: space-between;
+  
+        ion-col {
+          flex: 1;
+          margin-right: 16px;
+  
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+  
