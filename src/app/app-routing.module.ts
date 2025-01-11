@@ -4,31 +4,36 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'tabs',
+    pathMatch: 'full'
+  },
+  {
+    path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'setting',
-    loadChildren: () => import('./setting/setting.module').then( m => m.SettingPageModule)
+    loadChildren: () => import('./setting/setting.module').then(m => m.SettingPageModule)
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
     path: 'insight',
-    loadChildren: () => import('./insight/insight.module').then( m => m.InsightPageModule)
+    loadChildren: () => import('./insight/insight.module').then(m => m.InsightPageModule)
   },
   {
     path: 'accounts',
-    loadChildren: () => import('./accounts/accounts.module').then( m => m.AccountsPageModule)
+    loadChildren: () => import('./accounts/accounts.module').then(m => m.AccountsPageModule)
   },
   {
-    path: 'new-income',
-    loadChildren: () => import('./pages/new-income/new-income.module').then( m => m.NewIncomePageModule)
+    path: 'cash-in-page',
+    loadChildren: () => import('./Pages/cash-in-page/cash-in-page.module').then(m => m.CashInPagePageModule)
   },
   {
-    path: 'new-expense',
-    loadChildren: () => import('./pages/new-expense/new-expense.module').then( m => m.NewExpensePageModule)
+    path: 'cash-out-page',
+    loadChildren: () => import('./Pages/cash-out-page/cash-out-page.module').then(m => m.CashOutPagePageModule)
   },
 
 ];
@@ -38,4 +43,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
