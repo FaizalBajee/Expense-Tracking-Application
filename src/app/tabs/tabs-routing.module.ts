@@ -24,18 +24,13 @@ const routes: Routes = [
         path: 'setting',
         loadChildren: () => import('../setting/setting.module').then(m => m.SettingPageModule)
       },
-      // {
-      //   path: '',
-      //   redirectTo: '/tabs/home',
-      //   pathMatch: 'full'
-      // }
+      {
+        path: '',
+        redirectTo: '/tabs/home',
+        pathMatch: 'full'
+      }
     ]
   },
-  {
-    path: '',
-    redirectTo: '/tabs/home',
-    pathMatch: 'full'
-  }
 ];
 
 @NgModule({

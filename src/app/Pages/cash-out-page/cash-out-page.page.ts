@@ -27,10 +27,6 @@ export class CashOutPagePage implements OnInit {
   ngOnInit() {
   }
 
-  // handleClose() {
-
-  // }
-
   handleUpdate() {
     if (!this.expenseForm.valid) {
       alert('Please will the missing field ')

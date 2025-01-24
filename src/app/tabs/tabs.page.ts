@@ -16,13 +16,4 @@ export class TabsPage {
     this.menuOpen = !this.menuOpen;
   }
 
-
-  onNewIncome() {
-    console.log('New Income');
-  }
-
-  onNewExpense() {
-    console.log('New Expense');
-  }
-
 }
