@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-cash-in-page',
@@ -16,9 +17,9 @@ export class CashInPagePage implements OnInit {
 
   formattedDate = `${this.year}-${this.month}-${this.day}`;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private DBservice: DatabaseService) {
     this.incomeForm = this.fb.group({
-      cetegory: ['', Validators.required],
+      category: ['', Validators.required],
       amount: ['', Validators.required],
       date: [this.formattedDate]
     })
@@ -29,10 +30,27 @@ export class CashInPagePage implements OnInit {
 
   handleUpdate() {
     if (!this.incomeForm.valid) {
-      return alert('Please will the missing field ')
+      alert('Please fill in the missing fields'); // Fixed typo
+      return;
     }
-
+  
+    const category = this.incomeForm.get("category")?.value; 
+    const amount = this.incomeForm.get("amount")?.value;
+    const date = this.incomeForm.get("date")?.value;
+  
+    this.DBservice.addIncome(category, amount, date).subscribe({
+      next: (res) => {
+        console.log("Response:", res);
+        alert('Income record added successfully');
+      },
+      error: (err) => {
+        console.error("Error inserting income:", err);
+        alert('Failed to add income. Please try again.');
+      },
+      complete: () => console.log("Operation completed")
+    });
   }
+  
 
 
 }

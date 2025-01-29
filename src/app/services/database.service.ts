@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class DatabaseService {
   /**
    * Initialize SQLite Connection
    */
-   async initializeSQLite() {
+  async initializeSQLite() {
     try {
       this.sqlite = new SQLiteConnection(CapacitorSQLite);
       this.createDatabaseConnection();
@@ -42,7 +43,7 @@ export class DatabaseService {
         false,
         'no-encryption',
         1,
-        true
+        false
       );
       await db.open();
       console.log(`Database connection to "${this.dbName}" established`);
@@ -132,47 +133,98 @@ export class DatabaseService {
   /**
    * Add Income Record
    */
-  async addIncome(category: string, amount: number, date: string): Promise<void> {
-    if (!this.db) {
-      console.error('Database not initialized');
-      return;
-    }
+ 
+  addIncome(category: string, amount: number, date: string): Observable<{ message: string }> {
+    return new Observable<{ message: string }>((observer) => {
+      if (!this.db) {
+        console.error('Database not initialized');
+        observer.error({ message: 'Database not initialized' });
+        return;
+      }
 
-    const query = `
-      INSERT INTO Income (category, amount, date)
-      VALUES (?, ?, ?);
-    `;
+      const query = `
+            INSERT INTO Income (category, amount, date)
+            VALUES (?, ?, ?);
+        `;
 
-    try {
-      await this.db.run(query, [category, amount, date]);
-      console.log('Income record added successfully');
-    } catch (error) {
-      console.error('Error inserting data into Income table:', error);
-    }
+      this.db
+        .run(query, [category, amount, date])
+        .then(() => {
+          observer.next({ message: 'Income record added successfully' });
+          observer.complete();
+        })
+        .catch((error) => {
+          console.error('Error inserting data into Income table:', error);
+          observer.error({ message: 'Error inserting data', error });
+        });
+    }).pipe(
+      tap((response) => console.log(response.message))
+    );
   }
+
+  // Add spending records
+  addSpending(category: string, amount: number, date: string): Observable<{ message: string }> {
+    return new Observable<{ message: string }>((observer) => {
+      if (!this.db) {
+        console.error('Database not initialized');
+        observer.error({ message: 'Database not initialized' });
+        return;
+      }
+
+      const query = `
+            INSERT INTO Spending (category, amount, date)
+            VALUES (?, ?, ?);
+        `;
+
+      this.db
+        .run(query, [category, amount, date])
+        .then(() => {
+          observer.next({ message: 'Spending record added successfully' });
+          observer.complete();
+        })
+        .catch((error) => {
+          console.error('Error inserting data into spending table:', error);
+          observer.error({ message: 'Error inserting data', error });
+        });
+    }).pipe(
+      tap((response) => console.log(response.message))
+    );
+  }
+
 
   /**
    * Update Balance
    */
-  async updateBalance(date: string, income: number = 0, spending: number = 0): Promise<void> {
-    if (!this.db) {
-      console.error('Database not initialized');
-      return;
-    }
+ 
+  updateBalance(date: string, income: number = 0, spending: number = 0): Observable<{ message: string }> {
+    return new Observable<{ message: string }>((observer) => {
+      if (!this.db) {
+        console.error('Database not initialized');
+        observer.error({ message: 'Database not initialized' });
+        return;
+      }
 
-    const query = `
-      INSERT INTO Balance (date, income, spending, balance)
-      VALUES (?, ?, ?, (
-        SELECT COALESCE(SUM(income) - SUM(spending), 0) 
-        FROM Balance
-      ) + ? - ?);
-    `;
+      const query = `
+        INSERT INTO Balance (date, income, spending, balance)
+        VALUES (?, ?, ?, (
+          SELECT COALESCE(SUM(income) - SUM(spending), 0) 
+          FROM Balance
+        ) + ? - ?);
+      `;
 
-    try {
-      await this.db.run(query, [date, income, spending, income, spending]);
-      console.log('Balance updated successfully');
-    } catch (error) {
-      console.error('Error updating balance:', error);
-    }
+      this.db.run(query, [date, income, spending, income, spending])
+        .then(() => {
+          observer.next({ message: 'Balance updated successfully' });
+          observer.complete();
+        })
+        .catch((error) => {
+          console.error('Error updating balance:', error);
+          observer.error({ message: 'Error updating balance', error });
+        });
+    }).pipe(
+      tap((response) => console.log(response.message))
+    );
   }
+
+
 }
