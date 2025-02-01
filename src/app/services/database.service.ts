@@ -191,6 +191,63 @@ export class DatabaseService {
     );
   }
 
+  // getIncome
+  
+  getTotalIncome(): Observable<{ total: number }> {
+    return new Observable<{ total: number }>((observer) => {
+      if (!this.db) {
+        console.error('Database not initialized');
+        observer.error({ total: 0 });
+        return;
+      }
+  
+      const query = `SELECT SUM(amount) AS total FROM Income;`;
+  
+      this.db
+        .query(query)
+        .then((result) => {
+          const totalIncome = result.values?.[0]?.total || 0;
+          observer.next({ total: totalIncome });
+          observer.complete();
+        })
+        .catch((error) => {
+          console.error('Error fetching total income:', error);
+          observer.error({ total: 0 });
+        });
+    }).pipe(
+      tap((response) => console.log('Total Income:', response.total))
+    );
+  }
+
+  // getSpending
+
+  getTotalSpending(): Observable<{ total: number }> {
+    return new Observable<{ total: number }>((observer) => {
+      if (!this.db) {
+        console.error('Database not initialized');
+        observer.error({ total: 0 });
+        return;
+      }
+  
+      const query = `SELECT SUM(amount) AS total FROM Spending;`;
+  
+      this.db
+        .query(query)
+        .then((result) => {
+          const totalSpending = result.values?.[0]?.total || 0;
+          observer.next({ total: totalSpending });
+          observer.complete();
+        })
+        .catch((error) => {
+          console.error('Error fetching total spending:', error);
+          observer.error({ total: 0 });
+        });
+    }).pipe(
+      tap((response) => console.log('Total spending:', response.total))
+    );
+  }
+  
+
 
   /**
    * Update Balance

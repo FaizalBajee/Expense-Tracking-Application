@@ -13,7 +13,7 @@
           <ion-card class="balanceCard">
             <ion-card-content style="display: flex; justify-content: space-between;">
               <ion-label class="balanceLabel">Balance: </ion-label>
-              <ion-text class="balanceValue">$40,000</ion-text>
+              <ion-text class="balanceValue">{{balanceTotal || 0 }}</ion-text>
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -23,7 +23,7 @@
           <ion-card class="totalCard">
             <ion-card-content>
               <ion-label class="cardLabel">Income:</ion-label>
-              <ion-text class="cardValue">$70,000</ion-text>
+              <ion-text class="cardValue">{{incomeTotal || 0 }}</ion-text>
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -31,12 +31,13 @@
           <ion-card class="spendCard">
             <ion-card-content>
               <ion-label class="cardLabel">Spend:</ion-label>
-              <ion-text class="cardValue">$30,000</ion-text>
+              <ion-text class="cardValue">{{spendingTotal || 0 }}</ion-text>
             </ion-card-content>
           </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
+
 
 
   </div>
