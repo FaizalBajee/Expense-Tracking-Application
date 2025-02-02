@@ -11,26 +11,24 @@ export class DatabaseService {
   private readonly dbName = 'financeDB';
 
   constructor() {
-    // Initialize SQLite when the service is created
-    // this.initializeSQLite();
+
   }
 
-  /**
-   * Initialize SQLite Connection
-   */
+  
+  //  Initialize SQLite Connection
+   
   async initializeSQLite() {
     try {
       this.sqlite = new SQLiteConnection(CapacitorSQLite);
-      this.createDatabaseConnection();
+      await this.createDatabaseConnection();
       console.log("Successfully initializeSQLite")
     } catch (error) {
       console.error('Error initializing SQLiteConnection:', error);
     }
   }
 
-  /**
-   * Create Database Connection
-   */
+  // Create Database Connection
+   
   async createDatabaseConnection(): Promise<SQLiteDBConnection | null> {
     try {
       if (!this.sqlite) {
@@ -58,9 +56,8 @@ export class DatabaseService {
     }
   }
 
-  /**
-   * Close Database Connection
-   */
+  //  Close Database Connection
+   
   async closeDatabaseConnection(): Promise<void> {
     try {
       if (this.db) {
@@ -73,9 +70,8 @@ export class DatabaseService {
     }
   }
 
-  /**
-   * Create Tables in the Database
-   */
+  // Create Tables in the Database
+   
   private async createTables() {
     if (!this.db) return;
 
@@ -130,9 +126,8 @@ export class DatabaseService {
     }
   }
 
-  /**
-   * Add Income Record
-   */
+  //  Add Income Record
+   
  
   addIncome(category: string, amount: number, date: string): Observable<{ message: string }> {
     return new Observable<{ message: string }>((observer) => {
@@ -163,6 +158,7 @@ export class DatabaseService {
   }
 
   // Add spending records
+
   addSpending(category: string, amount: number, date: string): Observable<{ message: string }> {
     return new Observable<{ message: string }>((observer) => {
       if (!this.db) {
@@ -249,39 +245,38 @@ export class DatabaseService {
   
 
 
-  /**
-   * Update Balance
-   */
+  //  Update Balance
+  
  
-  updateBalance(date: string, income: number = 0, spending: number = 0): Observable<{ message: string }> {
-    return new Observable<{ message: string }>((observer) => {
-      if (!this.db) {
-        console.error('Database not initialized');
-        observer.error({ message: 'Database not initialized' });
-        return;
-      }
+  // updateBalance(date: string, income: number = 0, spending: number = 0): Observable<{ message: string }> {
+  //   return new Observable<{ message: string }>((observer) => {
+  //     if (!this.db) {
+  //       console.error('Database not initialized');
+  //       observer.error({ message: 'Database not initialized' });
+  //       return;
+  //     }
 
-      const query = `
-        INSERT INTO Balance (date, income, spending, balance)
-        VALUES (?, ?, ?, (
-          SELECT COALESCE(SUM(income) - SUM(spending), 0) 
-          FROM Balance
-        ) + ? - ?);
-      `;
+  //     const query = `
+  //       INSERT INTO Balance (date, income, spending, balance)
+  //       VALUES (?, ?, ?, (
+  //         SELECT COALESCE(SUM(income) - SUM(spending), 0) 
+  //         FROM Balance
+  //       ) + ? - ?);
+  //     `;
 
-      this.db.run(query, [date, income, spending, income, spending])
-        .then(() => {
-          observer.next({ message: 'Balance updated successfully' });
-          observer.complete();
-        })
-        .catch((error) => {
-          console.error('Error updating balance:', error);
-          observer.error({ message: 'Error updating balance', error });
-        });
-    }).pipe(
-      tap((response) => console.log(response.message))
-    );
-  }
+  //     this.db.run(query, [date, income, spending, income, spending])
+  //       .then(() => {
+  //         observer.next({ message: 'Balance updated successfully' });
+  //         observer.complete();
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error updating balance:', error);
+  //         observer.error({ message: 'Error updating balance', error });
+  //       });
+  //   }).pipe(
+  //     tap((response) => console.log(response.message))
+  //   );
+  // }
 
 
 }

@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { InsightPageRoutingModule } from './insight-routing.module';
 
 import { InsightPage } from './insight.page';
+import { GoogleChartsModule } from 'angular-google-charts';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    InsightPageRoutingModule
+    InsightPageRoutingModule,
+    GoogleChartsModule
   ],
   declarations: [InsightPage]
 })

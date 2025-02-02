@@ -28,7 +28,7 @@ export class AppComponent {
     });
   }
   async handleBackButton() {
-    if (this.router.url === '/tabs') {
+    if (this.router.url === '/tabs/home') {
       const currentTime = new Date().getTime();
       if (currentTime - this.lastBackPressTime < this.backPressInterval) {
         App.exitApp();

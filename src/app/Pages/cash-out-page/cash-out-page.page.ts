@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatabaseService } from 'src/app/services/database.service';
+import { ToastService } from 'src/app/services/toast-service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class CashOutPagePage implements OnInit {
 
   formattedDate = `${this.year}-${this.month}-${this.day}`;
 
-  constructor(private fb: FormBuilder, private DBservice: DatabaseService) {
+  constructor(private fb: FormBuilder, private DBservice: DatabaseService, private toastService: ToastService) {
     this.expenseForm = this.fb.group({
       category: ['', Validators.required],
       amount: ['', Validators.required],
@@ -31,7 +32,7 @@ export class CashOutPagePage implements OnInit {
 
   handleUpdate() {
     if (!this.expenseForm.valid) {
-      alert('Please fill in the missing fields'); // Fixed typo
+      this.toastService.toast('Please fill in the missing fields')
       return;
     }
   
@@ -42,11 +43,11 @@ export class CashOutPagePage implements OnInit {
     this.DBservice.addSpending(category, amount, date).subscribe({
       next: (res) => {
         console.log("Response:", res);
-        alert('Spending record added successfully'); 
+        this.toastService.toast('Spending record added successfully')
       },
       error: (err) => {
         console.error("Error inserting Spending:", err);
-        alert('Failed to add Spending. Please try again.'); 
+        this.toastService.toast('Failed to add Spending. Please try again.')
       },
       complete: () => console.log("Operation completed")
     });

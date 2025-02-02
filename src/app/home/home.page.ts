@@ -21,38 +21,40 @@ export class HomePage implements ViewDidEnter {
   balanceTotal!: number;
 
   ionViewDidEnter() {
-    console.log("lifecyle ")
+
+    console.log("lifecyle :", this.balanceTotal)
     this.TotalIncome();
     this.TotalSpending();
-    this.calculateBalance();
 
   }
 
   TotalIncome() {
     this.DBservice.getTotalIncome().subscribe({
-      next: (res) =>
-        console.log('Total Income:', res.total,
-          this.incomeTotal = res.total,
-          this.balanceTotal = res.total
-        ),
+      next: (res) => {
+        console.log('Total Income:', res.total);
+        this.incomeTotal = res.total;
+        this.calculateBalance();
+      },
       error: (err) => console.error('Error:', err),
     });
   }
 
   TotalSpending() {
     this.DBservice.getTotalSpending().subscribe({
-      next: (res) =>
-        console.log('Total Spending:', res.total,
-          this.spendingTotal = res.total
-        ),
+      next: (res) => {
+        console.log('Total Spending:', res.total);
+        this.spendingTotal = res.total;
+        this.calculateBalance(); 
+      },
       error: (err) => console.error('Error:', err),
     });
   }
 
   calculateBalance() {
-    this.balanceTotal = this.balanceTotal - this.spendingTotal;
-    console.log('Balance:11111111', this.balanceTotal);
+    if (this.incomeTotal !== undefined && this.spendingTotal !== undefined) {
+      this.balanceTotal = this.incomeTotal - this.spendingTotal;
+      console.log('Balance:', this.balanceTotal);
+    }
   }
-
 
 }

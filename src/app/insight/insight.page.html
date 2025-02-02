@@ -4,10 +4,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Insight</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <google-chart
+    [type]="chartType"
+    [data]="chartData">
+  </google-chart>
 </ion-content>
