@@ -243,40 +243,118 @@ export class DatabaseService {
     );
   }
   
+  //  Total food 
 
+  getFood(): Observable<{ total: number }> {
+    return new Observable<{ total: number }>((observer) => {
+        if (!this.db) {
+            console.error('Database not initialized');
+            observer.error(new Error('Database not initialized'));
+            return;
+        }
+        const query = `SELECT SUM(amount) AS totalFood FROM Spending WHERE category = 'Food'`;
 
-  //  Update Balance
-  
- 
-  // updateBalance(date: string, income: number = 0, spending: number = 0): Observable<{ message: string }> {
-  //   return new Observable<{ message: string }>((observer) => {
-  //     if (!this.db) {
-  //       console.error('Database not initialized');
-  //       observer.error({ message: 'Database not initialized' });
-  //       return;
-  //     }
+        this.db
+            .query(query)
+            .then((result) => {
+                const totalFood = result.values?.[0]?.totalFood ?? 0;
+                observer.next({ total: totalFood });
+                observer.complete();
+            })
+            .catch((error) => {
+                console.error('Error fetching total spending:', error);
+                observer.error({ total: 0 });
+            })
+    }).pipe(
+        tap((response) => console.log('Total Food:', response.total))
+    )
 
-  //     const query = `
-  //       INSERT INTO Balance (date, income, spending, balance)
-  //       VALUES (?, ?, ?, (
-  //         SELECT COALESCE(SUM(income) - SUM(spending), 0) 
-  //         FROM Balance
-  //       ) + ? - ?);
-  //     `;
+}
 
-  //     this.db.run(query, [date, income, spending, income, spending])
-  //       .then(() => {
-  //         observer.next({ message: 'Balance updated successfully' });
-  //         observer.complete();
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error updating balance:', error);
-  //         observer.error({ message: 'Error updating balance', error });
-  //       });
-  //   }).pipe(
-  //     tap((response) => console.log(response.message))
-  //   );
-  // }
+ //  Total Travel 
+
+ getTravel(): Observable<{ total: number }> {
+  return new Observable<{ total: number }>((observer) => {
+      if (!this.db) {
+          console.error('Database not initialized');
+          observer.error(new Error('Database not initialized'));
+          return;
+      }
+      const query = `SELECT SUM(amount) AS totalFood FROM Spending WHERE category = 'Travel'`;
+
+      this.db
+          .query(query)
+          .then((result) => {
+              const totalFood = result.values?.[0]?.totalFood ?? 0;
+              observer.next({ total: totalFood });
+              observer.complete();
+          })
+          .catch((error) => {
+              console.error('Error fetching total spending:', error);
+              observer.error({ total: 0 });
+          })
+  }).pipe(
+      tap((response) => console.log('Total Travel:', response.total))
+  )
+
+}
+
+ //  Total Fun 
+
+ getFun(): Observable<{ total: number }> {
+  return new Observable<{ total: number }>((observer) => {
+      if (!this.db) {
+          console.error('Database not initialized');
+          observer.error(new Error('Database not initialized'));
+          return;
+      }
+      const query = `SELECT SUM(amount) AS totalFood FROM Spending WHERE category = 'Fun'`;
+
+      this.db
+          .query(query)
+          .then((result) => {
+              const totalFood = result.values?.[0]?.totalFood ?? 0;
+              observer.next({ total: totalFood });
+              observer.complete();
+          })
+          .catch((error) => {
+              console.error('Error fetching total spending:', error);
+              observer.error({ total: 0 });
+          })
+  }).pipe(
+      tap((response) => console.log('Total Fun:', response.total))
+  )
+
+}
+
+ //  Total Others 
+
+ getOthers(): Observable<{ total: number }> {
+  return new Observable<{ total: number }>((observer) => {
+      if (!this.db) {
+          console.error('Database not initialized');
+          observer.error(new Error('Database not initialized'));
+          return;
+      }
+      const query = `SELECT SUM(amount) AS totalFood FROM Spending WHERE category = 'Others'`;
+
+      this.db
+          .query(query)
+          .then((result) => {
+              const totalFood = result.values?.[0]?.totalFood ?? 0;
+              observer.next({ total: totalFood });
+              observer.complete();
+          })
+          .catch((error) => {
+              console.error('Error fetching total spending:', error);
+              observer.error({ total: 0 });
+          })
+  }).pipe(
+      tap((response) => console.log('Total Others:', response.total))
+  )
+
+}
+
 
 
 }
