@@ -17,50 +17,47 @@ export class InsightPage implements ViewDidEnter {
   totalTravel: number = 0;
   totalFun: number = 0;
   totalOthers: number = 0;
-
+  
+  chartType = ChartType.PieChart;
+  chartData: any[] = [];
+  
   constructor(private chartService: ChartService, private service: DatabaseService) { }
-
+  
   ionViewDidEnter() {
-    this.foodFunc();
-    this.travelFunc();
-    this.funFunc();
-    this.othersFunc();
+    this.loadChartData();
   }
-
-  foodFunc() {
+  
+  loadChartData() {
     this.service.getFood().subscribe((res) => {
       this.totalFood = res.total;
-      console.log("Food spending: ", this.totalFood);
+      this.updateChart();
     });
-  }
-  travelFunc() {
+  
     this.service.getTravel().subscribe((res) => {
       this.totalTravel = res.total;
-      console.log("travel spending: ", this.totalTravel);
+      this.updateChart();
     });
-  }
-  funFunc() {
+  
     this.service.getFun().subscribe((res) => {
       this.totalFun = res.total;
-      console.log("Fun spending: ", this.totalFun);
+      this.updateChart();
     });
-  }
-  othersFunc() {
+  
     this.service.getOthers().subscribe((res) => {
       this.totalOthers = res.total;
-      console.log("others spending: ", this.totalOthers);
+      this.updateChart();
     });
   }
-
-
-
-  chartType = ChartType.PieChart;
-  chartData = [
-    ['Food', this.totalFood],
-    ['Travel', this.totalTravel],
-    ['Fun', this.totalFun],
-    ['Others', this.totalOthers],
-  ];
+  
+  updateChart() {
+    this.chartData = [
+      ['Food', this.totalFood],
+      ['Travel', this.totalTravel],
+      ['Fun', this.totalFun],
+      ['Others', this.totalOthers],
+    ];
+  }
+  
 
 
 }
