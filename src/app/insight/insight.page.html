@@ -5,8 +5,14 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <h3>Spending Chart</h3>
   <google-chart
     [type]="chartType"
     [data]="chartData">
   </google-chart>
+  <h3>Spending Bar</h3>
+  <google-chart
+  [type]="chartType1"
+  [data]="chartData">
+</google-chart>
 </ion-content>

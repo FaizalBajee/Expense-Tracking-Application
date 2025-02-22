@@ -44,6 +44,7 @@ export class CashInPagePage implements OnInit {
     this.DBservice.addIncome(category, amount, date).subscribe({
       next: (res) => {
         console.log("Response:", res);
+        this.incomeForm.reset();
         this.toastService.toast('Income record added successfully')
       },
       error: (err) => {

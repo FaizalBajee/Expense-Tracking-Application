@@ -19,9 +19,10 @@ export class InsightPage implements ViewDidEnter {
   totalOthers: number = 0;
   
   chartType = ChartType.PieChart;
+  chartType1 = ChartType.BarChart;
   chartData: any[] = [];
   
-  constructor(private chartService: ChartService, private service: DatabaseService) { }
+  constructor(private service: DatabaseService) { }
   
   ionViewDidEnter() {
     this.loadChartData();

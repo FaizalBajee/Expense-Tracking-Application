@@ -1,13 +1,56 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Accounts</ion-title>
+    <ion-title>New Expense</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Accounts</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="content" [fullscreen]="true">
+  <form [formGroup]="expenseForm"  (ngSubmit)="handleUpdate()"> 
+    <ion-grid class="grid">
+
+      <ion-row class="row">
+        <ion-col class="col">
+          <ion-label class="label">Pick a category</ion-label>
+          <ion-list>
+            <ion-item class="drop">
+              <ion-select class="drop" formControlName='category' interface="popover" placeholder="Select">
+                <ion-select-option value="Food">Food</ion-select-option>
+                <ion-select-option value="Travel">Travel</ion-select-option>
+                <ion-select-option value="Fun">Fun</ion-select-option>
+                <!-- <ion-select-option value="Friends">Friends</ion-select-option> -->
+                <ion-select-option value="Others">Others</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row class="row">
+        <ion-col class="col">
+          <ion-label class="label">Amount </ion-label>
+          <ion-input formControlName='amount' class="box"  fill="solid"
+            placeholder="Amount"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="row">
+        <ion-col class="col">
+          <ion-label  class="label">Transaction date : </ion-label>
+          <ion-input formControlName='date' [readonly]="true" class="box" fill="solid"
+            [placeholder]="formattedDate"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="row">
+        <!-- <ion-col class="col">
+          <ion-button class="Cbtn" (click)="handleClose()">Close</ion-button>
+        </ion-col> -->
+        <ion-col class="col">
+          <ion-button type="submit" class="btn">Update</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
 </ion-content>

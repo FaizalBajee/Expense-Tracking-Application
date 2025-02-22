@@ -35,3 +35,22 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+/* Force Light Mode */
+:root {
+    --ion-background-color: #ffffff;
+    --ion-text-color: #000000;
+  }
+  
+  /* Prevent dark mode from applying */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ion-background-color: #ffffff !important;
+      --ion-text-color: #000000 !important;
+    }
+  }
+  
+  body.dark {
+    --ion-background-color: #ffffff !important;
+    --ion-text-color: #000000 !important;
+  }
+  

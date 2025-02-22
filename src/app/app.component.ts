@@ -17,6 +17,7 @@ export class AppComponent {
   private lastBackPressTime = 0;
   private backPressInterval = 2000;
   constructor(private platform: Platform, private toastService: ToastService, private router: Router, private database: DatabaseService) {
+    document.body.classList.remove('dark');
     this.initializeApp();
   }
   initializeApp() {

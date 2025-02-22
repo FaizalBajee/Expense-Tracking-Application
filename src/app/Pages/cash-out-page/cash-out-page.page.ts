@@ -43,6 +43,7 @@ export class CashOutPagePage implements OnInit {
     this.DBservice.addSpending(category, amount, date).subscribe({
       next: (res) => {
         console.log("Response:", res);
+        this.expenseForm.reset();
         this.toastService.toast('Spending record added successfully')
       },
       error: (err) => {
